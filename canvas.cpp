@@ -25,7 +25,7 @@ QSize Canvas::canvasSize() const
     return mImage.size();
 }
 
-void Canvas::paintEvent(QPaintEvent *paintEvent)
+void Canvas::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     painter.drawImage(0, 0, mImage);
