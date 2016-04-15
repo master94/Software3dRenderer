@@ -4,15 +4,17 @@
 #include <QWidget>
 #include <QImage>
 
-class Canvas : public QWidget
+#include "ICanvas.hpp"
+
+class Canvas : public ICanvas, public QWidget
 {
 public:
     Canvas(int width, int height, QWidget *parent = nullptr);
 
-    QRgb pixelColor(int x, int y) const;
-    void setPixelColor(int x, int y, QRgb color);
+    QRgb pixelColor(int x, int y) const override;
+    void setPixelColor(int x, int y, QRgb color) override;
 
-    QSize canvasSize() const;
+    QSize canvasSize() const override;
 
 protected:
     void paintEvent(QPaintEvent *e) override;
