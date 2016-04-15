@@ -11,5 +11,5 @@ set(CMAKE_AUTOMOC ON)
 
 find_package(Qt5Widgets REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cpp canvas.cpp)
+add_executable(${PROJECT_NAME} main.cpp canvas.cpp renderer.cpp)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
