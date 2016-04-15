@@ -1,6 +1,9 @@
 #ifndef ICANVAS_HPP
 #define ICANVAS_HPP
 
+#include <QSize>
+#include <QColor>
+
 class ICanvas
 {
 public:
