@@ -19,6 +19,11 @@ int main(int argc, char **argv)
     ObjModelLoader loader;
 
     std::ifstream ifs(argv[1]);
+    if (!ifs) {
+        std::cerr << "Bad file" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
     loader.load(ifs);
 
     const int halfWidth = 350;
