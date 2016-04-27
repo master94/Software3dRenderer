@@ -1,7 +1,14 @@
 #include "renderer.hpp"
 
 #include <cmath>
-#include "ICanvas.hpp"
+#include <iostream>
+
+#include <geometry/point.hpp>
+#include <geometry/rect.hpp>
+#include <geometry/vec.hpp>
+#include <geometry/triangle.hpp>
+#include <geometry/utils.hpp>
+#include <ICanvas.hpp>
 
 Renderer::Renderer()
 {
@@ -42,4 +49,34 @@ void Renderer::drawLine(int x1, int y1, int x2, int y2, int color, ICanvas &canv
             errY -= 2 * dx;
         }
     }
+}
+
+void Renderer::drawLine(const Point &p1, const Point &p2, int color, ICanvas &canvas)
+{
+    drawLine(p1.x, p1.y, p2.x, p2.y, color, canvas);
+}
+
+void Renderer::fillTriangle(const Point &p1, const Point &p2, const Point &p3,
+        int color, ICanvas &canvas)
+{
+    drawLine(p1, p2, color, canvas);
+    drawLine(p2, p3, color, canvas);
+    drawLine(p3, p1, color, canvas);
+
+    std::vector<Point> ps{ p1, p2, p3 };
+    const auto brect = boundingRect<std::vector, int>(ps);
+
+    Triangle tr(p1, p2, p3);
+
+    for (int i = 0; i < brect.height; ++i) {
+        for (int j = 0; j < brect.width; ++j) {
+            if (isPointInsideTriangle(Point(brect.left + j, brect.top + i), tr))
+                canvas.setPixelColor(brect.left + j, brect.top + i, color);
+        }
+    }
+}
+
+void Renderer::fillTriangle(const Triangle &triangle, int color, ICanvas &canvas)
+{
+    fillTriangle(triangle.p1, triangle.p2, triangle.p3, color, canvas);
 }

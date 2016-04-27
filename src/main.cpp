@@ -5,7 +5,10 @@
 #include <model_loaders/ObjModelLoader.hpp>
 #include <canvas.hpp>
 #include <renderer.hpp>
+#include <geometry/point.hpp>
+#include <geometry/utils.hpp>
 
+const Vec3_<float> lightDir(0, 0, 1);
 void usage();
 
 int main(int argc, char **argv)
@@ -30,23 +33,22 @@ int main(int argc, char **argv)
     const int halfHeight = 350;
     Canvas canvas(2 * halfWidth, 2 * halfHeight);
 
-    Renderer renderer;
-    const QRgb color = QColor(Qt::white).rgb();
+    const auto toPoint = [](const Vertex &v) {
+        return Point((v.x + 1) * halfWidth, (2 - (v.y + 1)) * halfHeight);
+    };
 
+    Renderer renderer;
     Model model = loader.model();
+
     for (auto &face : model.faces) {
         Vertex *v = face.points;
-        
-        for (size_t j = 0; j < 3; ++j) {
-            const size_t p1 = j;
-            const size_t p2 = (j + 1) % 3;
 
-            const int x1 = (v[p1].x + 1) * halfWidth;
-            const int y1 = (2 - (v[p1].y + 1)) * halfHeight;
-            const int x2 = (v[p2].x + 1) * halfWidth;
-            const int y2 = (2 - (v[p2].y + 1)) * halfHeight;
+        const auto n = normal(v[0], v[1], v[2]);
+        const auto lum = n.dot(lightDir) * 255.0f;
 
-            renderer.drawLine(x1, y1, x2, y2, color, canvas);
+        if (lum > 0.0f) {
+            const QRgb color = QColor(lum, lum, lum).rgb();
+            renderer.fillTriangle(toPoint(v[0]), toPoint(v[1]), toPoint(v[2]), color, canvas);
         }
     }
 
