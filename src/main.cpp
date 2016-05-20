@@ -37,7 +37,7 @@ int main(int argc, char **argv)
         return Point((v.x + 1) * halfWidth, (2 - (v.y + 1)) * halfHeight);
     };
 
-    Renderer renderer;
+    Renderer renderer(canvas);
     Model model = loader.model();
 
     for (auto &face : model.faces) {
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 
         if (lum > 0.0f) {
             const QRgb color = QColor(lum, lum, lum).rgb();
-            renderer.fillTriangle(toPoint(v[0]), toPoint(v[1]), toPoint(v[2]), color, canvas);
+            renderer.fillTriangle(toPoint(v[0]), toPoint(v[1]), toPoint(v[2]), color);
         }
     }
 
