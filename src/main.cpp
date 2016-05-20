@@ -38,20 +38,7 @@ int main(int argc, char **argv)
     };
 
     Renderer renderer(canvas);
-    Model model = loader.model();
-
-    for (auto &face : model.faces) {
-        Vertex *v = face.points;
-
-        const auto n = normal(v[0], v[1], v[2]);
-        const auto lum = n.dot(lightDir) * 255.0f;
-
-        if (lum > 0.0f) {
-            const QRgb color = QColor(lum, lum, lum).rgb();
-            renderer.fillTriangle(toPoint(v[0]), toPoint(v[1]), toPoint(v[2]), color);
-        }
-    }
-
+    renderer.renderModel(loader.model());
     canvas.show();
     return app.exec();
 }
