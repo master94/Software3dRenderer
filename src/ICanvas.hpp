@@ -12,7 +12,7 @@ public:
     virtual QRgb pixelColor(int x, int y) const = 0;
     virtual void setPixelColor(int x, int y, QRgb color) = 0;
 
-    virtual QSize canvasSize() const = 0;
+    virtual QSize size() const = 0;
 };
 
 #endif // ICANVAS_HPP

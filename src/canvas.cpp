@@ -20,7 +20,7 @@ void Canvas::setPixelColor(int x, int y, QRgb color)
     mImage.setPixel(x, y, color);
 }
 
-QSize Canvas::canvasSize() const
+QSize Canvas::size() const
 {
     return mImage.size();
 }

@@ -14,7 +14,7 @@ public:
     QRgb pixelColor(int x, int y) const override;
     void setPixelColor(int x, int y, QRgb color) override;
 
-    QSize canvasSize() const override;
+    QSize size() const override;
 
 protected:
     void paintEvent(QPaintEvent *e) override;
