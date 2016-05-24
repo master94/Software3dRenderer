@@ -5,6 +5,7 @@
 #include <geometry/point.hpp>
 #include <geometry/model.hpp>
 #include <geometry/vec.hpp>
+#include <3dparty/tgaimage.h>
 
 class ICanvas;
 
@@ -20,13 +21,13 @@ public:
     Vec3_<float> lightDirection() const;
     void setLightDirection(const Vec3_<float> &dir);
 
-    void renderModel(const Model &model);
+    void renderModel(const Model &model, const TGAImage &texture);
 
 private:
     void drawLine(int x1, int y1, int x2, int y2, int color);
     void drawLine(const Point &p1, const Point &p2, int color);
 
-    void fillTriangle(const Vertex &p1, const Vertex &p2, const Vertex &p3, int color);
+    void fillFace(const Face &face, const TGAImage &texture);
 
 private:
     ICanvas &mCanvas;

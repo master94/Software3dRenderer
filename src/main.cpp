@@ -8,12 +8,14 @@
 #include <geometry/point.hpp>
 #include <geometry/utils.hpp>
 
+#include <3dparty/tgaimage.h>
+
 const Vec3_<float> lightDir(0, 0, 1);
 void usage();
 
 int main(int argc, char **argv)
 {
-    if (argc != 2) {
+    if (argc != 3) {
         usage();
         exit(EXIT_FAILURE);
     }
@@ -37,13 +39,20 @@ int main(int argc, char **argv)
         return Point((v.x + 1) * halfWidth, (2 - (v.y + 1)) * halfHeight);
     };
 
+    TGAImage texture;
+    if (!texture.read_tga_file(argv[2])) {
+        std::cerr << "Cant load TGA texture: " << argv[2] << std::endl;
+        exit(1);
+    }
+
     Renderer renderer(canvas);
-    renderer.renderModel(loader.model());
+    renderer.renderModel(loader.model(), texture);
     canvas.show();
+
     return app.exec();
 }
 
 void usage()
 {
-    std::cout << "Usage: <prog> obj_model_path" << std::endl;
+    std::cout << "Usage: <prog> obj_model_path tga_texture" << std::endl;
 }

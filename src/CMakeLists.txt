@@ -12,5 +12,5 @@ set(CMAKE_AUTOMOC ON)
 find_package(Qt5Widgets REQUIRED)
 
 add_subdirectory(model_loaders)
-add_executable(${PROJECT_NAME} main.cpp canvas.cpp renderer.cpp)
+add_executable(${PROJECT_NAME} main.cpp canvas.cpp renderer.cpp 3dparty/tgaimage.cpp)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets ModelsLoader)
